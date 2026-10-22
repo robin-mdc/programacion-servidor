@@ -8,7 +8,9 @@
             "mainClass": "com.daw.crudapi.CrudapiApplication",
             "projectName": "crudapi",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            // antes: "${workspaceFolder}/.env" (fichero que no existía)
+            // motivo: el .env con las credenciales está dentro de crudapi
+            "envFile": "${workspaceFolder}/crudapi/.env"
         }
     ]
 }

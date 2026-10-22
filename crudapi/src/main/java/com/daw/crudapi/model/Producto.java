@@ -1,20 +1,35 @@
 package com.daw.crudapi.model;
 
+import java.math.BigDecimal;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
- 
-@Data    // Lombok: genera getters, setters, toString, equals y hashCode
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+// antes: @Data (getters, setters, toString, equals y hashCode)
+// motivo: equals/hashCode con todos los campos dan problemas en entidades jpa (el id cambia al guardar)
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity  // JPA: esta clase se corresponde con una tabla de la base de datos
 public class Producto {
- 
+
     @Id                                                  // Clave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Valor autoincremental
     private Long id;
- 
-    private String nombre;
-    private double precio;
-}
 
+    // antes: sin @Column (el nombre podía ser null)
+    // motivo: un producto sin nombre no tiene sentido
+    @Column(nullable = false)
+    private String nombre;
+
+    // antes: private double precio;
+    // motivo: double tiene errores de redondeo, para dinero se usa BigDecimal
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio;
+}

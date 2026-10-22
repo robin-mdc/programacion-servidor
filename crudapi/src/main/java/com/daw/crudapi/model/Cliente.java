@@ -10,9 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,12 +19,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter 
+@Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "idx_email", columnList = "email"))
+// antes: @Table(indexes = @Index(name = "idx_email", columnList = "email"))
+// motivo: unique = true en email ya crea un índice, era redundante
 public class Cliente {
 
     @Id
@@ -61,7 +60,7 @@ public class Cliente {
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY) 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Pedido> pedidos = new ArrayList<>();
 
     // Funcion para añadir correctamente un pedido a este cliente
@@ -72,6 +71,7 @@ public class Cliente {
         pedido.setCliente(this);
     }
 
-    // hello class today we are
+    // antes: comentario suelto "hello class today we are"
+    // motivo: no aportaba nada al código
 
 }
