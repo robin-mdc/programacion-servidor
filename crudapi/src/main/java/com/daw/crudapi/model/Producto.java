@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 // antes: @Data (getters, setters, toString, equals y hashCode)
-// motivo: equals/hashCode con todos los campos dan problemas en entidades jpa (el id cambia al guardar)
+// motivo: equals/hashCode con todos los campos dan problemas en entidades jpa
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,8 +23,7 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Valor autoincremental
     private Long id;
 
-    // antes: sin @Column (el nombre podía ser null)
-    // motivo: un producto sin nombre no tiene sentido
+    // antes: sin @Column
     @Column(nullable = false)
     private String nombre;
 

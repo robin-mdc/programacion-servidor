@@ -1,8 +1,9 @@
 package com.daw.crudapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,14 +40,15 @@ public class Direccion {
     private String codigoPostal;
 
     // antes: "una direccion tiene muchos clientes"
-    // motivo: el comentario estaba al revés, ManyToOne = muchas direcciones pertenecen a un cliente
-    // antes: @ManyToOne (eager por defecto)
-    // motivo: con lazy el cliente solo se carga de bd cuando se usa
-    @ManyToOne(fetch = FetchType.LAZY)
+    // motivo: era al revés, ManyToOne = muchas direcciones pertenecen a un cliente
+    @ManyToOne
     // usamos joincolumn para especificar el nombre de la fk, apunta automaticamente al
     // id de la tabla cliente porque usamos la clase cliente
     // ponemos nullable false ya que no puede havber direcciones sin clientes asignado
     @JoinColumn(name= "cliente_id", nullable = false)
+    // antes: sin @JsonIgnore
+    // motivo: cliente -> direcciones -> cliente... daba un json infinito
+    @JsonIgnore
     private Cliente cliente;
 
 }

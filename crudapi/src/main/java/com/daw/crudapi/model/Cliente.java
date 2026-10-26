@@ -16,7 +16,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -25,7 +24,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 // antes: @Table(indexes = @Index(name = "idx_email", columnList = "email"))
-// motivo: unique = true en email ya crea un índice, era redundante
 public class Cliente {
 
     @Id
@@ -46,8 +44,9 @@ public class Cliente {
 
     // en mappedby va el nombre del campo de la otra entidad
     // que sirve para mapear esta
+    // antes: también @ToString.Exclude
+    // motivo: solo tiene efecto si la clase usa @ToString o @Data
     @Builder.Default
-    @ToString.Exclude
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Direccion> direcciones = new ArrayList<>();
 
@@ -58,8 +57,8 @@ public class Cliente {
         direccion.setCliente(this);
     }
 
+    // antes: también @ToString.Exclude
     @Builder.Default
-    @ToString.Exclude
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Pedido> pedidos = new ArrayList<>();
 
@@ -72,6 +71,5 @@ public class Cliente {
     }
 
     // antes: comentario suelto "hello class today we are"
-    // motivo: no aportaba nada al código
 
 }

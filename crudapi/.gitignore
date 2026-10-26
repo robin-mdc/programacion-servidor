@@ -31,8 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### credenciales ###
-# antes: no se ignoraba ningún fichero de credenciales
-# motivo: el .env tiene la contraseña de la bd y no debe subirse
-.env
