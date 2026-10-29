@@ -42,6 +42,10 @@ public class Cliente {
     @Column(nullable = false)
     private String telefono;
 
+    // antes: no existía (el proyecto del profesor lo tiene como int)
+    // motivo: Integer y no int, porque un int no puede ser null y los clientes antiguos no tienen edad
+    private Integer edad;
+
     // en mappedby va el nombre del campo de la otra entidad
     // que sirve para mapear esta
     // antes: también @ToString.Exclude

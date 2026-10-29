@@ -64,6 +64,9 @@ public class DatosPruebaService {
         String sufijo = UUID.randomUUID().toString().substring(0, 8);
         cliente.setEmail("cliente." + sufijo + "@" + faker.internet().domainName());
         cliente.setTelefono(faker.phoneNumber().cellPhone());
+        // antes: sin edad
+        // desde 5 años para poder probar la consulta de menores
+        cliente.setEdad(faker.number().numberBetween(5, 91));
         return cliente;
     }
 
